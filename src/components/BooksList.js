@@ -1,22 +1,29 @@
-import React,{ Component } from 'react'
-import Book from './Book'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-class BooksList extends Component{
-  render(){
-    return (
 
-          <ol className="books-grid">
-            {this.props.books.map((book) =>(
-              <li key={book.id}>
-                <Book bookDetails={book} onShelfChange={(book,newShelf) => this.props.onShelfChange(book,newShelf)}/>
-              </li>
-            ))
-            }
-          </ol>
+import BookShelf from './BookShelf'
 
-    )
-  }
+const BooksList = (props) => {
+  return(
+    <div className="list-books">
+      <div className="list-books-title">
+        <h1>MyReads</h1>
+      </div>
+      <div className="list-books-content">
+        <div>
+         <BookShelf title="Current Reading" books={props.books.filter((book) => book.shelf==="currentlyReading")} onShelfChange={props.onShelfChange}/>
+         <BookShelf title="Want to Read" books={props.books.filter((book) => book.shelf==="wantToRead")} onShelfChange={props.onShelfChange}/>
+         <BookShelf title="Read" books={props.books.filter((book) => book.shelf==="read")} onShelfChange={props.onShelfChange}/>
+        </div>
+      </div>
+      <div className="open-search">
+        <Link to="/search">Add a book</Link>
+      </div>
+    </div>
+  )
 }
+
 BooksList.propTypes = {
   books : PropTypes.array.isRequired,
   onShelfChange : PropTypes.func.isRequired

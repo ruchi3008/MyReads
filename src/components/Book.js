@@ -3,10 +3,12 @@ import PropTypes from 'prop-types'
 class Book extends Component{
 
   render(){
-    let book = this.props.bookDetails
+    let book = this.props.book
     let thumbNail = ''
     if(book.imageLinks !== undefined){
          thumbNail = book.imageLinks.smallThumbnail
+    }else{
+         thumbNail = "http://via.placeholder.com/128x193?text=No%20Cover";
     }
     return (
       <div className="book">
@@ -23,7 +25,7 @@ class Book extends Component{
           </div>
         </div>
         <div className="book-title">{book.title}</div>
-        <div className="book-authors">{book.authors.join()}</div>
+        <div className="book-authors">{book.authors ? book.authors.join(', '):''}</div>
 
       </div>
     )
@@ -31,7 +33,7 @@ class Book extends Component{
 }
 
 Book.propTypes = {
-  books : PropTypes.array.isRequired,
+  book : PropTypes.object.isRequired,
   onShelfChange : PropTypes.func.isRequired
 }
 export default Book
